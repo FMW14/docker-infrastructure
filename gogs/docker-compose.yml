@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  gogs:
+    build: ./
+    container_name: gogs
+    restart: always
+    volumes:
+      - "${DATA_PATH}/gogs:/data"
+    ports:
+      - "222:22"
+      - "3000:3000"
