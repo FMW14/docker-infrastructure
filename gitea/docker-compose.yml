@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  gitea-rpi:
+    build: kapdap/gitea-rpi
+    container_name: gogs
+    restart: always
+    volumes:
+      - "${DATA_PATH}/gitea-rpi:/data"
+    ports:
+      - "2221:22"
+      - "3001:3000"
