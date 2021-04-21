@@ -2,8 +2,8 @@ version: "3.4"
 
 services:
   gitea-rpi:
-    build: kapdap/gitea-rpi
-    container_name: gogs
+    image: kapdap/gitea-rpi
+    container_name: gitea-rpi
     restart: always
     volumes:
       - "${DATA_PATH}/gitea-rpi:/data"
