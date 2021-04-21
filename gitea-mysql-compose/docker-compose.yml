@@ -25,7 +25,11 @@ services:
       - gitea
     volumes:
 #      - ./gitea:/data
-      - ${DRIVE}${DIR1}:/data
+#      - ${DRIVE}${DIR1}:/data
+      - type: bind
+#        source: C:\dockerdata\gitea
+        source: ${DRIVE}${DIR1}
+        target: /data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -46,4 +50,9 @@ services:
       - gitea
     volumes:
 #      - ./mysql:/var/lib/mysql
-      - ${DRIVE}${DIR2}:/data:/var/lib/mysql
+#      - ${DRIVE}${DIR2}:/data:/var/lib/mysql
+#      - /dockerdata:/data:/var/lib/mysql
+      - type: bind
+#        source: C:\dockerdata\gitea-db
+        source: ${DRIVE}${DIR2}
+        target: /var/lib/mysql
