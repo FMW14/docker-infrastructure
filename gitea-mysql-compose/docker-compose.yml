@@ -7,6 +7,7 @@ networks:
 volumes:
   gitea:
     driver: local
+  gitea-db:
 
 services:
   server:
@@ -33,14 +34,16 @@ services:
     networks:
       - gitea
     volumes:
+      - gitea:/data
 #      - ./gitea:/data
 #      - ${DRIVE}${DIR1}:/data
-      - type: bind
-#        source: C:\dockerdata\gitea
-        source: ${DATA_PATH}/gitea-mysql${GITEA_DIR}
-        target: /data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+
+#      - type: bind
+##        source: C:\dockerdata\gitea
+#        source: ${DATA_PATH}/gitea-mysql${GITEA_DIR}
+#        target: /data
+#      - /etc/timezone:/etc/timezone:ro
+#      - /etc/localtime:/etc/localtime:ro
     ports:
       - "3000:3000"
       - "222:22"
@@ -63,11 +66,14 @@ services:
     networks:
       - gitea
     volumes:
+      - gitea-db:/var/lib/postgresql
 #      - ./mysql:/var/lib/mysql
 #      - ${DRIVE}${DIR2}:/data:/var/lib/mysql
 #      - /dockerdata:/data:/var/lib/mysql
-      - type: bind
-#        source: C:\dockerdata\gitea-db
-        source: ${DATA_PATH}/gitea-mysql${GITEA_DB}
-        target: /var/lib/postgresql
-#        target: /var/lib/mysql
+
+
+#      - type: bind
+##        source: C:\dockerdata\gitea-db
+#        source: ${DATA_PATH}/gitea-mysql${GITEA_DB}
+#        target: /var/lib/postgresql
+##        target: /var/lib/mysql
