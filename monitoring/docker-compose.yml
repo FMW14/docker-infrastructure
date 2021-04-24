@@ -30,8 +30,8 @@ services:
       - "/entrypoint.sh"
       - "-config"
       - "/etc/influxdb/influxdb.conf"
-    depends_on:
-      - influxdb-init
+#    depends_on:
+#      - influxdb-init
 
   telegraf:
     image: telegraf
