@@ -11,7 +11,8 @@ volumes:
 services:
   server:
 #    image: gitea/gitea:1.14.1
-    image: kapdap/gitea-rpi
+#    image: kapdap/gitea-rpi
+    image: strobi/rpi-gitea:latest
     container_name: gitea-rpi
     environment:
       - USER_UID=1000
@@ -22,11 +23,11 @@ services:
       - GITEA__database__NAME=gitea
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=gitea
-      - DB_TYPE=postgres
-      - DB_HOST=db:5432
-      - DB_NAME=gitea
-      - DB_USER=gitea
-      - DB_PASSWD=gitea
+#      - DB_TYPE=postgres
+#      - DB_HOST=db:5432
+#      - DB_NAME=gitea
+#      - DB_USER=gitea
+#      - DB_PASSWD=gitea
     restart: always
     networks:
       - gitea
