@@ -62,4 +62,5 @@ services:
       - type: bind
 #        source: C:\dockerdata\gitea-db
         source: ${DATA_PATH}/gitea-mysql${GITEA_DB}
-        target: /var/lib/mysql
+        target: /var/lib/postgresql
+#        target: /var/lib/mysql
