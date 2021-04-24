@@ -12,7 +12,8 @@ services:
   server:
 #    image: gitea/gitea:1.14.1
 #    image: kapdap/gitea-rpi
-    image: strobi/rpi-gitea:latest
+#    image: strobi/rpi-gitea:latest
+    image: kunde21/gitea-arm:latest
     container_name: gitea-rpi
     environment:
 #      - USER_UID=1000
