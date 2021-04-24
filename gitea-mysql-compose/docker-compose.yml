@@ -46,6 +46,7 @@ services:
     container_name: gitea-db
     restart: always
     environment:
+      - POSTGRES_DB=gitea
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 #      - MYSQL_ROOT_PASSWORD=gitea
