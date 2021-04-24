@@ -10,8 +10,9 @@ volumes:
 
 services:
   server:
-    image: gitea/gitea:1.14.1
-    container_name: gitea
+#    image: gitea/gitea:1.14.1
+    image: kapdap/gitea-rpi
+    container_name: gitea-rpi
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -28,7 +29,7 @@ services:
 #      - ${DRIVE}${DIR1}:/data
       - type: bind
 #        source: C:\dockerdata\gitea
-        source: ${DRIVE}${DIR1}
+        source: ${DATA_PATH}/gitea-mysql${GITEA_DIR}
         target: /data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -40,6 +41,7 @@ services:
   db:
 #    image: mysql:5.7
     image: bjartscular/low-memory-mysql:1.0
+    container_name: gitea-db
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=gitea
@@ -54,5 +56,5 @@ services:
 #      - /dockerdata:/data:/var/lib/mysql
       - type: bind
 #        source: C:\dockerdata\gitea-db
-        source: ${DRIVE}${DIR2}
+        source: ${DATA_PATH}/gitea-mysql${GITEA_DB}
         target: /var/lib/mysql
