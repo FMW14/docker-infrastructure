@@ -1,20 +1,20 @@
 version: "3.4"
 
 services:
-  influxdb-init:
-    image: influxdb
-    container_name: influxdb-init
-    volumes:
-      - "${CONFIGS_PATH}/influxdb.conf:/etc/influxdb/influxdb.conf:ro"
-      - "${DATA_PATH}/influxdb:/var/lib/influxdb"
-    entrypoint:
-      - "/init-influxdb.sh"
-    environment:
-      - "INFLUXDB_DB=$INFLUXDB_DB"
-      - "INFLUXDB_WRITE_USER=$INFLUXDB_WRITE_USER"
-      - "INFLUXDB_WRITE_USER_PASSWORD=$INFLUXDB_WRITE_USER_PASSWORD"
-      - "INFLUXDB_READ_USER=$INFLUXDB_READ_USER"
-      - "INFLUXDB_READ_USER_PASSWORD=$INFLUXDB_READ_USER_PASSWORD"
+#  influxdb-init:
+#    image: influxdb
+#    container_name: influxdb-init
+#    volumes:
+#      - "${CONFIGS_PATH}/influxdb.conf:/etc/influxdb/influxdb.conf:ro"
+#      - "${DATA_PATH}/influxdb:/var/lib/influxdb"
+#    entrypoint:
+#      - "/init-influxdb.sh"
+#    environment:
+#      - "INFLUXDB_DB=$INFLUXDB_DB"
+#      - "INFLUXDB_WRITE_USER=$INFLUXDB_WRITE_USER"
+#      - "INFLUXDB_WRITE_USER_PASSWORD=$INFLUXDB_WRITE_USER_PASSWORD"
+#      - "INFLUXDB_READ_USER=$INFLUXDB_READ_USER"
+#      - "INFLUXDB_READ_USER_PASSWORD=$INFLUXDB_READ_USER_PASSWORD"
 
   influxdb:
     image: influxdb
