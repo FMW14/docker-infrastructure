@@ -16,12 +16,17 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
-      - GITEA__database__TYPE=postgres
-#      - GITEA__database__HOST=db:3306
-      - GITEA__database__HOST=db:5432
-      - GITEA__database__NAME=gitea
-      - GITEA__database__USER=postgres
-      - GITEA__database__PASSWD=postgres
+#      - GITEA__database__TYPE=postgres
+##      - GITEA__database__HOST=db:3306
+#      - GITEA__database__HOST=db:5432
+#      - GITEA__database__NAME=gitea
+#      - GITEA__database__USER=postgres
+#      - GITEA__database__PASSWD=postgres
+      - DB_TYPE=postgres
+      - DB_HOST=db:5432
+      - DB_NAME=gitea
+      - DB_USER=gitea
+      - DB_PASSWD=gitea
     restart: always
     networks:
       - gitea
@@ -46,9 +51,9 @@ services:
     container_name: gitea-db
     restart: always
     environment:
+      - POSTGRES_USER=gitea
+      - POSTGRES_PASSWORD=gitea
       - POSTGRES_DB=gitea
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
 #      - MYSQL_ROOT_PASSWORD=gitea
 #      - MYSQL_USER=gitea
 #      - MYSQL_PASSWORD=gitea
