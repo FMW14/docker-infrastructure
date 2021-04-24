@@ -11,9 +11,6 @@ volumes:
 
 services:
   server:
-#    image: gitea/gitea:1.14.1
-#    image: kapdap/gitea-rpi
-#    image: strobi/rpi-gitea:latest
     image: kunde21/gitea-arm:latest
     container_name: gitea-rpi
     environment:
@@ -35,23 +32,14 @@ services:
       - gitea
     volumes:
       - gitea:/data
-#      - ./gitea:/data
-#      - ${DRIVE}${DIR1}:/data
-
-#      - type: bind
-##        source: C:\dockerdata\gitea
-#        source: ${DATA_PATH}/gitea-mysql${GITEA_DIR}
-#        target: /data
-#      - /etc/timezone:/etc/timezone:ro
-#      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "3000:3000"
       - "222:22"
     depends_on:
      - db
   db:
-#    image: mysql:5.7
-#    image: bjartscular/low-memory-mysql:1.0
     image: postgres:alpine
     container_name: gitea-db
     restart: always
@@ -59,21 +47,7 @@ services:
       - POSTGRES_USER=gitea
       - POSTGRES_PASSWORD=gitea
       - POSTGRES_DB=gitea
-#      - MYSQL_ROOT_PASSWORD=gitea
-#      - MYSQL_USER=gitea
-#      - MYSQL_PASSWORD=gitea
-#      - MYSQL_DATABASE=gitea
     networks:
       - gitea
     volumes:
       - gitea-db:/var/lib/postgresql
-#      - ./mysql:/var/lib/mysql
-#      - ${DRIVE}${DIR2}:/data:/var/lib/mysql
-#      - /dockerdata:/data:/var/lib/mysql
-
-
-#      - type: bind
-##        source: C:\dockerdata\gitea-db
-#        source: ${DATA_PATH}/gitea-mysql${GITEA_DB}
-#        target: /var/lib/postgresql
-##        target: /var/lib/mysql
