@@ -42,7 +42,7 @@ services:
   db:
 #    image: mysql:5.7
 #    image: bjartscular/low-memory-mysql:1.0
-    image: docker pull postgres:9.6.21-alpine
+    image: postgres:9.5.25-alpine
     container_name: gitea-db
     restart: always
     environment:
