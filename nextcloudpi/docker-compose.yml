@@ -1,0 +1,16 @@
+version: "3"
+
+volumes:
+  ncdata:
+
+services:
+  nextcloud:
+    image: ownyourbits/nextcloudpi
+    container_name: nextcloudpi
+    restart: always
+    volumes:
+      - ncdata:/data
+    ports:
+      - "4443:4443"
+      - "443:443"
+      - "80:80"
