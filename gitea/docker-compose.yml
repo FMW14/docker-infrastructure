@@ -1,12 +1,18 @@
 version: "3.4"
 
+volumes:
+  gitea2:
+    driver: local
+
 services:
   gitea-rpi:
-    image: kapdap/gitea-rpi
-    container_name: gitea-rpi
+    image: kunde21/gitea-arm:latest
+    container_name: gitea-rpi2
     restart: always
-    volumes:
-      - "${DATA_PATH}/gitea-rpi:/data"
     ports:
       - "2221:22"
       - "3001:3000"
+    volumes:
+      - gitea2:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
