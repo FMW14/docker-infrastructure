@@ -1,13 +1,31 @@
-version: "3"
+#version: "3"
+#
+#services:
+#  cups:
+##    image: olbat/cupsd
+#    image: lemariva/rpi-cups
+#    container_name: cups
+#    restart: always
+#    volumes:
+#      - /var/run/dbus:/var/run/dbus
+#      - /dev/bus/usb:/dev/bus/usb
+#    ports:
+#      - "6311:631"
 
+version: "2"
 services:
   cups:
-#    image: olbat/cupsd
-    image: lemariva/rpi-cups
+    image: tigerj/cups-airprint:latest
     container_name: cups
-    restart: always
+    network_mode: host
+    restart: unless-stopped
     volumes:
       - /var/run/dbus:/var/run/dbus
-      - /dev/bus/usb:/dev/bus/usb
-    ports:
-      - "6311:631"
+      - ~/airprint_data/config:/config
+      - ~/airprint_data/services:/services
+    devices:
+      - /dev/bus:/dev/bus
+      - /dev/usb:/dev/usb
+    environment:
+      - CUPSADMIN=admin
+      - CUPSPASSWORD=password
