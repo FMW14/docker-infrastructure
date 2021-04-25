@@ -4,10 +4,10 @@ networks:
   gitea:
     external: false
 
-volumes:
-  gitea:
-    driver: local
-  gitea-db:
+#volumes:
+#  gitea:
+#    driver: local
+#  gitea-db:
 
 services:
   server:
@@ -31,7 +31,8 @@ services:
     networks:
       - gitea
     volumes:
-      - gitea:/data
+#      - gitea:/data
+      - /mnt/usb1/docker/volumes/gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -50,4 +51,5 @@ services:
     networks:
       - gitea
     volumes:
-      - gitea-db:/var/lib/postgresql
+#      - gitea-db:/var/lib/postgresql
+      - /mnt/usb1/docker/volumes/gitea-db:/var/lib/postgresql
