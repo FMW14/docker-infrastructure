@@ -10,4 +10,4 @@ services:
       - /var/run/dbus:/var/run/dbus
       - /dev/bus/usb:/dev/bus/usb
     ports:
-      - "6311:361"
+      - "6311:631"
