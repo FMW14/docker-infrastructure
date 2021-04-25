@@ -8,4 +8,4 @@ services:
     volumes:
       - /var/run/dbus:/var/run/dbus
     ports:
-      - "631:361"
+      - "6311:361"
