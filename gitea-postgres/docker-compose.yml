@@ -4,10 +4,10 @@ networks:
   gitea:
     external: false
 
-#volumes:
-#  gitea:
-#    driver: local
-#  gitea-db:
+volumes:
+  gitea:
+    driver: local
+  gitea-db:
 
 services:
   server:
