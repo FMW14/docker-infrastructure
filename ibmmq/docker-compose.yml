@@ -1,0 +1,18 @@
+version: "3"
+
+volumes:
+  ibmmqdata:
+
+services:
+  ibmmq:
+    image: ibmcom/mq
+    container_name: ibmmq-container
+    restart: unless-stopped
+    volumes:
+      - ibmmqdata:/mnt/mqm
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    environment:
+      LICENSE: accept
+      MQ_QMGR_NAME: QM1
