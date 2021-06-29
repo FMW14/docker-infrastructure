@@ -1,15 +1,15 @@
 version: "3"
 
-volumes:
-  ibmmqdata:
+#volumes:
+#  ibmmqdata:
 
 services:
   ibmmq:
     image: ibmcom/mq
     container_name: ibmmq-container
     restart: unless-stopped
-    volumes:
-      - ibmmqdata:/mnt/mqm
+#    volumes:
+#      - ibmmqdata:/mnt/mqm
     ports:
       - "1414:1414"
       - "9443:9443"
