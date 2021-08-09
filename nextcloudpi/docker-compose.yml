@@ -1,7 +1,7 @@
 version: "3"
 
-volumes:
-  ncdata:
+#volumes:
+#  ncdata:
 
 services:
   nextcloud:
@@ -9,7 +9,10 @@ services:
     container_name: nextcloudpi
     restart: always
     volumes:
-      - ncdata:/data
+#      - ncdata:/data
+      - type: bind
+        source: /mnt/usb1/docker/volumes/ncdata
+        target: /data
     ports:
       - "4443:4443"
       - "443:443"
