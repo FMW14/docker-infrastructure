@@ -7,7 +7,7 @@ services:
   nextcloud:
     image: ownyourbits/nextcloudpi
     container_name: nextcloudpi
-    restart: always
+    restart: unless-stopped
     volumes:
 #      - ncdata:/data
       - type: bind
