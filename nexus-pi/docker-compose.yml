@@ -9,6 +9,7 @@ services:
       - "nexus-data:/nexus-data"
     ports:
       - "8081:8081"
+      - "2000-2020:2000-2020"
 
 volumes:
   nexus-data: {}
