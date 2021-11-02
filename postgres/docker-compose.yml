@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  pg_db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=sample_db
+#    volumes:
+#      - pg_project:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+#  db:
+#    image: postgres
+#    restart: unless-stopped
+#    environment:
+#      POSTGRES_PASSWORD: postgres
+#
+#  adminer:
+#    image: adminer
+#    restart: unless-stopped
+#    ports:
+#      - 8080:8080
