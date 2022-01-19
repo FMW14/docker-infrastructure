@@ -1,0 +1,13 @@
+version: '2.1'
+services:
+  torrservermatrix:
+#    image: soulassassin85/torrserver:latest
+    image: solopasha/torrserver:v111
+    container_name: torrservermatrix
+    hostname: torrservermatrix
+    volumes:
+      - ~/torrserver/db:/torrserver/db
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8090:8090
+    restart: unless-stopped
