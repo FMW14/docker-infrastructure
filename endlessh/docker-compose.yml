@@ -1,0 +1,8 @@
+version: '2.1'
+services:
+  endlessh:
+    image: harshavardhanj/endlessh:1.1-alpine
+    container_name: endlessh
+    ports:
+      - 22:2222
+    restart: unless-stopped
