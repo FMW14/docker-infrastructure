@@ -44,7 +44,7 @@ services:
     networks:
       - example_network
     ports:
-      - 127.0.0.1:3000:3000
+      - 3000:3000
     environment:
       - GF_SECURITY_ADMIN_USER=examples
       - GF_SECURITY_ADMIN_PASSWORD=examples
