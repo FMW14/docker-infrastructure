@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   endlessh:
-    container_name: endlessh
+    container_name: endlessh-go
     image: shizunge/endlessh-go:20220308.1
     restart: always
     command:
@@ -20,7 +20,7 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: endlessh-prometheus
     restart: always
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -39,7 +39,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    container_name: endlessh-grafana
     restart: always
     networks:
       - example_network
