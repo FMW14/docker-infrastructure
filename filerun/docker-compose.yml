@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  db:
+    image: tobi312/rpi-mariadb:10.3
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      MYSQL_USER: bjartscular
+      MYSQL_PASSWORD: your_mysql_password
+      MYSQL_DATABASE: filerundb
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Moscow
+    volumes:
+      - /home/pi/filerun-db:/var/lib/mysql
+
+  web:
+    image: filerun/filerun:arm64v8
+    restart: unless-stopped
+    environment:
+      FR_DB_HOST: db
+      FR_DB_PORT: 3306
+      FR_DB_NAME: filerundb
+      FR_DB_USER: bjartscular
+      FR_DB_PASS: your_mysql_password
+      APACHE_RUN_USER: pi
+      APACHE_RUN_USER_ID: 1000
+      APACHE_RUN_GROUP: pi
+      APACHE_RUN_GROUP_ID: 1000
+    depends_on:
+      - db
+    links:
+      - db:db
+    ports:
+      - "7010:80"
+    volumes:
+      - /home/pi/filerun-html:/var/www/html
+      - /home/pi/filerun:/user-files
