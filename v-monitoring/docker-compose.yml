@@ -83,5 +83,5 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
-    links:
-      - node-exporter:node-exporter
+#    links:
+#      - node-exporter:node-exporter
