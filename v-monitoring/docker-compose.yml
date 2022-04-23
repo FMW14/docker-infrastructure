@@ -41,6 +41,7 @@ services:
   victoria-metrics:
     container_name: victoria-metrics
     image: victoriametrics/victoria-metrics
+    restart: unless-stopped
     ports:
       - 8428:8428
       - 8089:8089
