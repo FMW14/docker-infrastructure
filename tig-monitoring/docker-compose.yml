@@ -1,64 +1,54 @@
-# using version 2 because of https://docs.docker.com/compose/compose-file/#resources
-version: "2.4"
+version: "3.4"
+
 services:
-  telegraf:
-    image: drpsychick/telegraf
-    restart: always
-    environment:
-      HOST_PROC: /rootfs/proc
-      HOST_SYS: /rootfs/sys
-      HOST_ETC: /rootfs/etc
-      TEL_AGENT_HOSTNAME: hostname = "myhostname"
-      TEL_OUTPUTS_INFLUXDB_0: "[[outputs.influxdb]]"
-      TEL_OUTPUTS_INFLUXDB_URLS: urls = ["http://localhost:8086"]
-      TEL_INPUTS_KERNEL_0: "[[inputs.kernel]]"
-      TEL_INPUTS_MEM_0: "[[inputs.mem]]"
-      TEL_INPUTS_SWAP_0: "[[inputs.swap]]"
-      TEL_INPUTS_PROCESSES_0: "[[inputs.processes]]"
-      TEL_INPUTS_SYSTEM_0: "[[inputs.system]]"
-      TEL_INPUTS_DISK_0: "[[inputs.disk]]"
-      TEL_INPUTS_DISKIO_0: "[[inputs.diskio]]"
-      TEL_INPUTS_NET_0: "[[inputs.net]]"
-      TEL_INPUTS_NETSTAT_0: "[[inputs.netstat]]"
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8086:8086
+      # - 8083:8083 # ADMINISTRATOR PORT
     volumes:
+      - "./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro"
+      - "influxdb:/var/lib/influxdb"
+#      - "${DATA_PATH}/influxdb:/var/lib/influxdb"
+    environment:
+      INFLUXDB_DB: telegraf_metrics
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
+      INFLUXDB_USER: telegraf
+      INFLUXDB_USER_PASSWORD: telegraf
+#    entrypoint:
+#      - "/entrypoint.sh"
+#      - "-config"
+#      - "/etc/influxdb/influxdb.conf"
+#    depends_on:
+#      - influxdb-init
+    networks:
+      - tig-monitoring
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    restart: unless-stopped
+#    network_mode: "service:influxdb"
+    volumes:
+#      - "/:/hostfs:ro"
+      - "./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/root/services/cpugpu/data:/host/temperature"
       - "/proc:/rootfs/proc:ro"
       - "/sys:/rootfs/sys:ro"
       - "/etc:/rootfs/etc:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    cpu_percent: 1
-    mem_limit: 50m
-    network_mode: "host"
-  influxdb:
-    image: drpsychick/influxdb
-    restart: always
     environment:
-      IFX_GLOBAL: reporting-disabled = true
-    ports:
-      - 8086:8086
-      - 8089:8089/udp
-    volumes:
-      - "influxdb:/var/lib/influxdb"
-    cpu_percent: 50
-    mem_limit: 1g
+      HOST_PROC: /hostfs/proc
+      HOST_MOUNT_PREFIX: /hostfs
     networks:
-      - monitoring
-  grafana:
-    image: grafana/grafana
-    restart: always
-      #environment:
-    #GF_INSTALL_PLUGINS: # plugins to install
-    ports:
-      - 3000:3000
-    volumes:
-      - "grafana:/var/lib/grafana"
-    cpu_percent: 1
-    mem_limit: 200m
-    networks:
-      - monitoring
+      - tig-monitoring
 
 networks:
-  monitoring:
+  tig-monitoring:
 
 volumes:
   influxdb:
-  grafana:
