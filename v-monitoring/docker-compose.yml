@@ -4,6 +4,7 @@ volumes:
   prometheus_data: {}
   grafana_data: {}
   victoria-metrics-data: {}
+  vmagentdata: {}
 
 services:
   grafana:
