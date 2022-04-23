@@ -28,36 +28,15 @@ services:
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
 
-#  victoria-metrics:
-#    image: victoriametrics/victoria-metrics:latest
-#    container_name: victoria-metrics
-#    restart: unless-stopped
-#    ports:
-#      - "8428:8428"
-#    command: -storageDataPath=/victoria-metrics-data -memory.allowedPercent=30 -retentionPeriod=12
-#    volumes:
-#      - victoria-metrics-data:/victoria-metrics-data
-
   victoria-metrics:
+    image: victoriametrics/victoria-metrics:latest
     container_name: victoria-metrics
-    image: victoriametrics/victoria-metrics
     restart: unless-stopped
     ports:
-      - 8428:8428
-      - 8089:8089
-      - 8089:8089/udp
-      - 2003:2003
-      - 2003:2003/udp
-      - 4242:4242
+      - "8428:8428"
+    command: -storageDataPath=/victoria-metrics-data -memory.allowedPercent=30 -retentionPeriod=12
     volumes:
-      - vmdata:/storage
-      - ./victoria-metrics/prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - "--storageDataPath=/storage"
-      - "--graphiteListenAddr=:2003"
-      - "--opentsdbListenAddr=:4242"
-      - "--httpListenAddr=:8428"
-      - "--influxListenAddr=:8089"
+      - victoria-metrics-data:/victoria-metrics-data
 
   rpi_cpu_stats:
     image: thundermagic/rpi_cpu_stats:latest
@@ -106,19 +85,19 @@ services:
 #      - ./prometheus:/etc/prometheus
 #      - prometheus_data:/prometheus
 
-#  vmagent:
-#    image: victoriametrics/vmagent
-#    container_name: vmagent
-#    restart: unless-stopped
-#    depends_on:
-#      - "victoria-metrics"
-#    ports:
-#      - 8429:8429
-#    volumes:
-#      - vmagentdata:/vmagentdata
-#      - ./victoria-metrics/prometheus.yml:/etc/prometheus/prometheus.yml
-#    command:
-#      - "--promscrape.config=/etc/prometheus/prometheus.yml"
-#      - "--remoteWrite.url=http://victoria-metrics:8428/api/v1/write"
-##    networks:
-##      - vm_net
+  vmagent:
+    image: victoriametrics/vmagent
+    container_name: vmagent
+    restart: unless-stopped
+    depends_on:
+      - "victoria-metrics"
+    ports:
+      - 8429:8429
+    volumes:
+      - vmagentdata:/vmagentdata
+      - ./victoria-metrics/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+      - "--remoteWrite.url=http://victoria-metrics:8428/api/v1/write"
+#    networks:
+#      - vm_net
