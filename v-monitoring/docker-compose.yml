@@ -98,5 +98,5 @@ services:
     command:
       - "--promscrape.config=/etc/prometheus/prometheus.yml"
       - "--remoteWrite.url=http://victoriametrics:8428/api/v1/write"
-    networks:
-      - vm_net
+#    networks:
+#      - vm_net
