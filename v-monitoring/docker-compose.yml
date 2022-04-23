@@ -1,0 +1,87 @@
+version: "3"
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+  victoria-metrics-data: {}
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring-grafana
+    restart: unless-stopped
+    environment:
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_PATHS_DATA=/var/lib/grafana
+      - GF_PATHS_HOME=/usr/share/grafana
+      - GF_PATHS_LOGS=/var/log/grafana
+      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    user: 1000:1000
+    hostname: rpi-grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+
+  victoria-metrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: victoria-metrics
+    restart: unless-stopped
+    ports:
+      - "8428:8428"
+    command: -storageDataPath=/victoria-metrics-data -memory.allowedPercent=30 -retentionPeriod=12
+    volumes:
+      - victoria-metrics-data:/victoria-metrics-data
+
+  rpi_cpu_stats:
+    image: thundermagic/rpi_cpu_stats:latest
+    container_name: rpi_cpu_stats
+    restart: unless-stopped
+    ports:
+      - "9669:9669"
+    environment:
+      - PUID=1001
+      - PGID=1001
+    volumes:
+      - /sys:/sys
+
+  blackbox_exporter:
+    image: prom/blackbox-exporter:master
+    container_name: blackbox_exporter
+    restart: unless-stopped
+#    extra_hosts: *pi
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox/blackbox_config.yml:/etc/blackbox_exporter/config.yml
+
+#  node-exporter:
+#    container_name: monitoring-node-exporter
+#    expose:
+#      - 9100
+#    hostname: rpi-exporter
+#    image: prom/node-exporter:latest
+#    restart: unless-stopped
+
+  prometheus:
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    container_name: monitoring-prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    expose:
+      - 9090
+    hostname: rpi-prom
+    image: prom/prometheus:latest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    links:
+      - node-exporter:node-exporter
