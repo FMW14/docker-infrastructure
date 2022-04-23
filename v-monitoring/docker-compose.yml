@@ -94,7 +94,7 @@ services:
       - 8429:8429
     volumes:
       - vmagentdata:/vmagentdata
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./victoria-metrics/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - "--promscrape.config=/etc/prometheus/prometheus.yml"
       - "--remoteWrite.url=http://victoriametrics:8428/api/v1/write"
