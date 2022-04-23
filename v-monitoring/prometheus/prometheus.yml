@@ -28,9 +28,9 @@ rule_files:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
+#  - job_name: 'prometheus'
+#    static_configs:
+#      - targets: ['localhost:9090']
 
 #  - job_name: 'node_exporter'
 #    static_configs:
@@ -39,6 +39,10 @@ scrape_configs:
   - job_name: 'pi_cpu_stats'
     static_configs:
       - targets: ['rpi_cpu_stats:9669']
+
+  - job_name: 'vmagent'
+    static_configs:
+      - targets: ['vmagent:8429']
 
   - job_name: 'victoria_metrics_stats'
     static_configs:
