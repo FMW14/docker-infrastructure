@@ -15,7 +15,6 @@ services:
       - DB_CLIENT=pg
     ports:
       - "7060:22300"
-      - "123:123"
   db:
     image: postgres:13.1
     container_name: joplin-server-db
