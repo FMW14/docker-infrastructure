@@ -5,7 +5,7 @@ services:
     container_name: joplin-server-app
     restart: unless-stopped
     environment:
-      - APP_BASE_URL=http://joplin.yourdomain.tld:22300
+      - APP_BASE_URL=http://192.168.192.180:22300
       - APP_PORT=22300
       - POSTGRES_PASSWORD=joplin
       - POSTGRES_DATABASE=joplin
