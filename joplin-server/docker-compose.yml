@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: florider89/joplin-server:2.7.4-beta
+    image: florider89/joplin-server:2.7.4
     container_name: joplin-server-app
     restart: unless-stopped
     environment:
