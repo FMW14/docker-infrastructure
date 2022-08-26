@@ -59,8 +59,8 @@ services:
     depends_on:
       - minio1
       - minio2
-      - minio3
-      - minio4
+#      - minio3
+#      - minio4
 
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
