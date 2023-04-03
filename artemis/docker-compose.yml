@@ -2,6 +2,7 @@ version: '2'
 services:
   node0:
     image: vromero/activemq-artemis:latest
+    container_name: activemq-artemis
     volumes:
       - ./node0:/var/lib/artemis/etc-override
     environment:
