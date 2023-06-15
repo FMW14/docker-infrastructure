@@ -13,11 +13,11 @@ remote_write:
   - url: http://victoria-metrics:8428/api/v1/write
 
 # Alertmanager configuration
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-          # - alertmanager:9093
+#alerting:
+#  alertmanagers:
+#    - static_configs:
+#        - targets:
+#          # - alertmanager:9093
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -64,3 +64,11 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox_exporter:9115  # The blackbox exporter's real hostname:port.
+
+  - job_name: 'pve-exporter'
+    static_configs:
+      - targets:
+          - lab1.lan:9221
+    metrics_path: /pve
+    params:
+      module: [ default ]
